@@ -15,7 +15,7 @@ Content-Type: application/json
 {
   "login": "user",
   "password": "user123",
-  "token": "377350263"
+  "token": "567395058"
 
 }
 
@@ -27,11 +27,11 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8081/user/3
+GET http://localhost:8081/user/8
 Content-Type: application/json
 
 {
-  "token":"567395058"
+  "token": "-1464266702"
 }
 ###
 
@@ -40,18 +40,18 @@ Content-Type:application/json
 
 {
   "id": 1,
-  "login": "user1131",
-  "password": "user1233",
-  "balance": 5000,
-  "name": "RVova",
+  "login": "user",
+  "password": "user123",
+  "balance": 50000,
+  "name": "Vova",
   "age": 22,
-  "address": "RKolcova 15-22",
-  "email": "RVovabooks@mail.ru"
+  "address": "Kolcova 15-22",
+  "email": "Vovabooks@mail.ru"
 
 }
 ###
 
-DELETE http://localhost:8081/user/delete6
+DELETE http://localhost:8081/user/delete/8
 Content-Type: application/json
 
 
@@ -61,15 +61,15 @@ PUT http://localhost:8081/user/update
 Content-Type: application/json
 
 {
-  "id": 6,
-  "login": "user33333",
+  "id": 1,
+  "login": "user",
   "password": "user123",
   "balance": 5006,
   "name": "Vika111111",
   "age": 32,
   "address": "Pyshkina 47",
   "email": "Vikabooks@mail.ru",
-  "token": "567395058"
+  "token": "-1464266702"
 
 }
 ###            BOOOKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -78,7 +78,7 @@ GET http://localhost:8081/book/all
 Content-Type: application/json
 ###
 
-GET http://localhost:8081/book/3
+GET http://localhost:8081/book/4
 Content-Type: application/json
 ###
 
@@ -95,7 +95,7 @@ Content-Type:application/json
 }
 ###
 
-DELETE http://localhost:8081/book/delete12
+DELETE http://localhost:8081/book/delete/19
 Content-Type: application/json
 
 ###
@@ -104,8 +104,8 @@ PUT http://localhost:8081/book/update
 Content-Type: application/json
 
 {
-  "bookId": 15,
-  "title": "Mary Barbara Hamilton Cartland",
+  "bookId": 18,
+  "title": "1Mary Barbara Hamilton Cartland",
   "author": "Barbara Kartlend",
   "bookGenre": 3,
   "price": 100,
@@ -118,7 +118,7 @@ GET http://localhost:8081/basket/getAll
 Content-Type: application/json
 
 {
-  "token": "567395058"
+  "token": "-1464266702"
 }
 
 ###
@@ -127,16 +127,13 @@ POST http://localhost:8081/basket/addBasket
 Content-Type: application/json
 
 {
-  "bookId": 18,
-  "title": "Maaaaaaaary Barbara Hamilton Cartland",
-  "author": "Barbara Kartlend",
-  "bookGenre": "NOVEL",
-  "price": 100,
-  "raiting": "noStar"
+  "id": 1,
+  "idBooks": 2,
+  "totalCost": 76
 }
 
 ###
-DELETE http://localhost:8081/basket/delete1
+DELETE http://localhost:8081/basket/delete/17
 Content-Type: application/json
 
 
@@ -146,7 +143,7 @@ GET http://localhost:8081/order/all
 Content-Type: application/json
 
 {
-  "token": "567395058"
+  "token": "-1464266702"
 }
 
 ###
@@ -155,23 +152,24 @@ Content-Type: application/json
 
 {
   "idUser":1,
-  "idBasket": 16,
+  "idBasket": 18,
   "phone": "+375-29-111-11-11",
+  "totalPrice": 76,
   "status": 0
 
 }
 
 ###
 
-GET http://localhost:8081/order/1
+GET http://localhost:8081/order/2
 Content-Type: application/json
 
 {
-  "token": "567395058"
+  "token": "-1464266702"
 }
 
 ###
-DELETE http://localhost:8081/order/delete1
+DELETE http://localhost:8081/order/delete/1
 Content-Type: application/json
 
 
@@ -182,10 +180,10 @@ Content-Type: application/json
 {
   "idOrder":2,
   "idUser":1,
-  "idBasket":17,
-  "totalPrice": 111,
+  "idBasket":18,
+  "totalPrice": 121,
   "phone": "+375-29-111-11-11",
-  "status": 1
+  "status":0
 
 }
 ###
@@ -196,7 +194,7 @@ Content-Type: application/json
 {
   "idOrder":2,
   "idUser":1,
-  "idBasket":16,
+  "idBasket":18,
   "phone": "+375-29-111-11-11",
   "status": 1
 

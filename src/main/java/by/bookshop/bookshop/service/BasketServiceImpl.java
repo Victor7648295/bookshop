@@ -35,7 +35,6 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public Basket addBookInBasket(Basket basket) {
-      /* Basket basket = new Basket(id,price);*/
         log.info("book add in basket " + basket);
        return basketRepository.save(basket);
 

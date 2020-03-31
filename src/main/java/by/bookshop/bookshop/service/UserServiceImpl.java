@@ -50,6 +50,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUserByLoginAndPassword(login,password);
     }
 
+
+
     public boolean getUserToken(String token){
         User user = userRepository.findUserByToken(token);
         return user.getToken() != null;

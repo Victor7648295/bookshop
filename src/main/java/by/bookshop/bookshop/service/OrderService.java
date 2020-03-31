@@ -11,5 +11,6 @@ public interface OrderService {
     public List<Order> findAllOrder();
     public void deleteOrder(Long id);
     public Order updateOrder(Order order);
+    public List<String> sent(Order order);
 
 }

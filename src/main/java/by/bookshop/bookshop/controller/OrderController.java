@@ -2,16 +2,14 @@ package by.bookshop.bookshop.controller;
 import by.bookshop.bookshop.exception.AuthException;
 import by.bookshop.bookshop.exception.NotFoundException;
 import by.bookshop.bookshop.exception.NotMoneyException;
-import by.bookshop.bookshop.model.Basket;
 import by.bookshop.bookshop.model.Order;
 import by.bookshop.bookshop.model.User;
 import by.bookshop.bookshop.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 import java.util.List;
-import static by.bookshop.bookshop.model.Order.Status.sent;
+
 
 @RestController
 @RequestMapping(value = "/order")
@@ -47,7 +45,7 @@ public class OrderController  {
         return new ResponseEntity<>(order,HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Order> deleteOrder(@PathVariable("id") long id) throws NotFoundException {
         if(orderService.findById(id) == null ) throw new NotFoundException("Not found orders");
         orderService.deleteOrder(id);
@@ -73,17 +71,7 @@ public class OrderController  {
     @PostMapping(value = "/sent")
     public ResponseEntity<List<String>> sentDelivery(@RequestBody Order order) throws NotMoneyException {
         if(userServiceimpl.findUser(order).getBalance() < bookService.findBook(order).getPrice())throw new NotMoneyException("Not enough funds on balance");
-        User newUser = userServiceimpl.findUser(order);
-        newUser.setBalance(newUser.getBalance() - bookService.findBook(order).getPrice());
-        List<String> list = new ArrayList<>();
-      String user = userServiceimpl.findUser(order).toString();
-      String  book = bookService.findBook(order).toString();
-        list.add(user);
-        list.add(book);
-        order.setStatus(sent);
-        orderService.saveOrder(order);
-        Basket basket = basketService.getBasket(order.getIdBasket());
-        basketService.deleteBasket(basket.getId());
+         List<String > list =  orderService.sent(order);
       return new ResponseEntity<>( list,HttpStatus.OK);
     }
 }

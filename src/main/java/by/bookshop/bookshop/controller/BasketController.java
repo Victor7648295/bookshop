@@ -2,7 +2,6 @@ package by.bookshop.bookshop.controller;
 import by.bookshop.bookshop.exception.AuthException;
 import by.bookshop.bookshop.exception.NotFoundException;
 import by.bookshop.bookshop.model.Basket;
-import by.bookshop.bookshop.model.Book;
 import by.bookshop.bookshop.model.User;
 import by.bookshop.bookshop.service.BasketServiceImpl;
 import by.bookshop.bookshop.service.BookServiceImpl;
@@ -37,7 +36,7 @@ public class BasketController {
        return new ResponseEntity<>(basket,HttpStatus.OK);
     }
 
-@DeleteMapping (value = "/delete{id}")
+@DeleteMapping (value = "/delete/{id}")
     public ResponseEntity<Basket> deleteBasket(@PathVariable("id") Long id) throws NotFoundException {
     if(basketService.getBasket(id) == null)throw new NotFoundException("Not found basket");
     basketService.deleteBasket(id);
@@ -45,11 +44,9 @@ public class BasketController {
     }
 
     @PostMapping(value = "/addBasket")
-    public ResponseEntity<Basket> addBook(@RequestBody Book newBook) throws NotFoundException {
-        Book book = bookService.getBookById(newBook.getBookId());
-        if (book == null) throw new NotFoundException("Not found book");
-                Basket basket = new Basket(book.getBookId(),book.getPrice());
-                basketService.addBookInBasket(basket);
-                return new ResponseEntity<>(basket, HttpStatus.OK);
+    public ResponseEntity<Basket> addBook(@RequestBody Basket basket) throws NotFoundException {
+    if(basket == null) throw new NotFoundException("Not found basket");
+    basketService.addBookInBasket(basket);
+    return new ResponseEntity<>(basket,HttpStatus.OK);
     }
 }

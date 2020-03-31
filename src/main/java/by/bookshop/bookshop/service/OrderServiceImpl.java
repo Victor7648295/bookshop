@@ -1,17 +1,31 @@
 package by.bookshop.bookshop.service;
+import by.bookshop.bookshop.model.Basket;
 import by.bookshop.bookshop.model.Order;
+import by.bookshop.bookshop.model.User;
 import by.bookshop.bookshop.repository.BasketRepository;
 import by.bookshop.bookshop.repository.BookRepository;
 import by.bookshop.bookshop.repository.OrderRepository;
 import by.bookshop.bookshop.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import java.util.List;
+
+import static by.bookshop.bookshop.model.Order.Status.sent;
 
 
 @Service
 @Slf4j
 public class OrderServiceImpl implements OrderService {
+    @Autowired
+    OrderServiceImpl orderService;
+    final
+    BasketServiceImpl basketService;
+    final
+    UserServiceImpl userServiceimpl;
+    final
+    BookServiceImpl bookService;
     final
     BasketRepository basketRepository;
     final
@@ -21,11 +35,14 @@ public class OrderServiceImpl implements OrderService {
     final
     OrderRepository orderRepository;
 
-    public OrderServiceImpl(UserRepository userRepository, OrderRepository orderRepository, BookRepository bookRepository, BasketRepository basketRepository) {
+    public OrderServiceImpl(UserRepository userRepository, OrderRepository orderRepository, BookRepository bookRepository, BasketRepository basketRepository, UserServiceImpl userServiceimpl, BookServiceImpl bookService, BasketServiceImpl basketService) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.bookRepository = bookRepository;
         this.basketRepository = basketRepository;
+        this.userServiceimpl = userServiceimpl;
+        this.bookService = bookService;
+        this.basketService = basketService;
     }
 
     @Override
@@ -54,6 +71,22 @@ public class OrderServiceImpl implements OrderService {
     public Order updateOrder(Order order) {
         log.info("update order" + order);
         return orderRepository.save(order);
+    }
+
+    @Override
+    public List<String> sent(Order order) {
+        User newUser = userServiceimpl.findUser(order);
+        newUser.setBalance(newUser.getBalance() - bookService.findBook(order).getPrice());
+        List<String> list = new ArrayList<>();
+        String user = userServiceimpl.findUser(order).toString();
+        String  book = bookService.findBook(order).toString();
+        list.add(user);
+        list.add(book);
+        order.setStatus(sent);
+        orderRepository.save(order);
+        Basket basket = basketService.getBasket(order.getIdBasket());
+        basketService.deleteBasket(basket.getId());
+        return list;
     }
 
 
